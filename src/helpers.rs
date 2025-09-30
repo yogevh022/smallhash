@@ -4,7 +4,6 @@ use std::thread;
 use std::thread::JoinHandle;
 use std::time::{Duration, Instant};
 use rand::rngs::ThreadRng;
-use crate::hash::hash_xxhash_style;
 
 #[derive(Default)]
 pub(crate) struct HashStats {
@@ -120,17 +119,17 @@ where
     (best_const, best)
 }
 
-pub(crate) fn hash_thread<F>(name: &'static str, bounds: i32, mut f: F) -> JoinHandle<HashStats>
-where
-    F: FnMut(&mut ThreadRng, [i32; 3]) -> u32 + Send + 'static,
-{
-    thread::spawn(move || {
-        println!("{} thread started.", name);
-        let mut rng = rand::rng();
-        let start = Instant::now();
-        let mut hash_stats = ivec_range(bounds, |input| f(&mut rng, input));
-        hash_stats.name = Some(name);
-        hash_stats.duration = Some(start.elapsed());
-        hash_stats
-    })
-}
+// pub(crate) fn hash_thread<F>(name: &'static str, bounds: i32, mut f: F) -> JoinHandle<HashStats>
+// where
+//     F: FnMut(&mut ThreadRng, [i32; 3]) -> u32 + Send + 'static,
+// {
+//     thread::spawn(move || {
+//         println!("{} thread started.", name);
+//         let mut rng = rand::rng();
+//         let start = Instant::now();
+//         let mut hash_stats = ivec_range(bounds, |input| f(&mut rng, input));
+//         hash_stats.name = Some(name);
+//         hash_stats.duration = Some(start.elapsed());
+//         hash_stats
+//     })
+// }
