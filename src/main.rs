@@ -1,7 +1,7 @@
 mod hash;
 mod helpers;
 
-use hash_small::u32x3_to_18_bits;
+use smallhash::u32x3_to_18_bits;
 use crate::hash::{hash_fnv_style, hash_murmur_style, hash_pcg_style, hash_xxhash_style};
 // use crate::helpers::hash_thread;
 
